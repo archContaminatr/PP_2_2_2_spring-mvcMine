@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -21,14 +22,11 @@ public class CarServiceImpl implements CarService {
         cars.add(new Car("Kia", "Rio",87009));
     }
 
-    private final int COUNT_DEFAULT_VALUE = cars.size();
-
-    public int getCOUNT_DEFAULT_VALUE() {
-        return COUNT_DEFAULT_VALUE;
-    }
-
     @Override
     public List<Car> show(Integer count) {
-        return cars.stream().limit(count).toList();
+//        return ;
+        return Optional.ofNullable(count)
+                .map(c -> cars.stream().limit(c).toList())
+                .orElse(cars);
     }
 }

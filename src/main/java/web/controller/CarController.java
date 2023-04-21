@@ -6,24 +6,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import web.service.CarServiceImpl;
+import web.service.CarService;
 
 @Controller
 @RequestMapping("/cars")
 public class CarController {
 
-    private final CarServiceImpl carServiceImpl;
+    private final CarService carService;
 
     @Autowired
-    public CarController(CarServiceImpl carServiceImpl) {
-        this.carServiceImpl = carServiceImpl;
+    public CarController(CarService carService) {
+        this.carService = carService;
     }
 
-    //Можно ли как-то в defaultValue для count под аннотацией @RequestParam вложить
-    // переменную COUNT_DEFAULT_VALUE класса CarServiceImpl?
     @GetMapping
-    public String printCar(@RequestParam(value = "count", defaultValue = "5") Integer count, Model model) {
-        model.addAttribute("cars", carServiceImpl.show(count));
+    public String printCar(@RequestParam(required = false) Integer count, Model model) {
+        model.addAttribute("cars", carService.show(count));
         return "cars/show";
     }
 }

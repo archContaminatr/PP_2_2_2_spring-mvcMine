@@ -29,9 +29,6 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> show(Integer count) {
-        if (count == null) {
-            count = getCOUNT_DEFAULT_VALUE();
-        }
         return cars.stream().limit(count).toList();
     }
 }
